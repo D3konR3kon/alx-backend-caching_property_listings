@@ -11,7 +11,7 @@ from django.conf import settings
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'alx-backend-caching_property_listings.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'alx_backend_caching_property_listings.settings')
 django.setup()
 
 from django.core.cache import cache
