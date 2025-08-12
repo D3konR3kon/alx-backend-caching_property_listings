@@ -4,6 +4,7 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Property
+from .utils import get_all_properties
 import json
 
 
@@ -15,8 +16,8 @@ def property_list(request):
    
     search_query = request.GET.get('search', '')
     
-
-    properties = Property.objects.all()
+    
+    properties = get_all_properties()
     
     if search_query:
         properties = properties.filter(
@@ -24,9 +25,6 @@ def property_list(request):
             Q(description__icontains=search_query) |
             Q(location__icontains=search_query)
         )
-    
-
-    properties = properties.order_by('-created_at')
     
 
     paginator = Paginator(properties, 10)  
@@ -114,7 +112,12 @@ def clear_cache(request):
     Utility view to clear cache (useful for development and testing)
     """
     from django.core.cache import cache
+    from .utils import invalidate_properties_cache
+    
+
     cache.clear()
+    
+    invalidate_properties_cache()
     
     if request.GET.get('format') == 'json':
         return JsonResponse({'message': 'Cache cleared successfully'})
