@@ -2,7 +2,7 @@ from django.core.cache import cache
 from .models import Property
 
 
-def get_all_properties():
+def getall_properties():
     """
     Get all properties from cache or database.
     
@@ -14,17 +14,17 @@ def get_all_properties():
         QuerySet: All Property objects ordered by creation date (newest first)
     """
 
-    cached_properties = cache.get('all_properties')
+    cached_properties = cache.get('allproperties')
     
     if cached_properties is not None:
 
         return cached_properties
     
-    properties = Property.objects.all().order_by('-created_at')
+    queryset = Property.objects.all().order_by('-created_at')
     
-    cache.set('all_properties', properties, 3600)
+    cache.set('allproperties', queryset, 3600)
     
-    return properties
+    return queryset
 
 
 def invalidate_properties_cache():
@@ -32,4 +32,4 @@ def invalidate_properties_cache():
     Utility function to invalidate the properties cache.
     This should be called when properties are created, updated, or deleted.
     """
-    cache.delete('all_properties')
+    cache.delete('allproperties')

@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Property
-from .utils import get_all_properties
+from .utils import getall_properties
 import json
 
 
@@ -17,7 +17,7 @@ def property_list(request):
     search_query = request.GET.get('search', '')
     
     
-    properties = get_all_properties()
+    properties = getall_properties()
     
     if search_query:
         properties = properties.filter(
