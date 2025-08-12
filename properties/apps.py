@@ -11,4 +11,4 @@ class PropertiesConfig(AppConfig):
         This ensures that signal handlers are registered when Django starts.
         """
         
-        from . import signals
+        import properties.signals
